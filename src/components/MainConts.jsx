@@ -1,98 +1,36 @@
-// import React, { useEffect, useState } from 'react'
-
-// import { fetchAPI } from '../utils/fetchApi'
-// import { Category, Video } from './'
-
-// const MainConts = () => {
-//   const [selectCategory, setselectCategory] = useState('webstoryboy')
-//   const [videos, setVideos] = useState(null)
-
-//   useEffect(() => {
-//     fetchAPI(`search?part=snippet&q=webstoryboy`).then((data) =>
-//       console.log(data)
-//     )
-//   }, [])
-
-//   return (
-//     <main id="main">
-//       <aside id="aside">
-//         <Category
-//           // 변수
-//           selectCategory={selectCategory}
-//           // 함수
-//           setselectCategory={setselectCategory}
-//         />
-//       </aside>
-//       <section id="contents">
-//         <h2>
-//           <em>{selectCategory}</em>맛있는케이크
-//         </h2>
-//         <Video videos={videos} />
-//       </section>
-//     </main>
-//   )
-// }
-
-// export default MainConts
-
-// import React, { useEffect, useState } from 'react'
-
-// import { fetchAPI } from '../utils/fetchAPI'
-// import { Category, Video } from './'
-
-// const MainConts = () => {
-//   const [selectCategory, setSelectCategory] = useState('orange')
-//   const [videos, setVideos] = useState(null)
-
-//   useEffect(() => {
-//     fetchAPI(`search?part=snippet&q=orange`).then((data) => console.log(data))
-//   }, [])
-
-//   return (
-//     <main id="main">
-//       <aside id="aside">
-//         <Category
-//           selectCategory={selectCategory}
-//           setSelectCategory={setSelectCategory}
-//         />
-//       </aside>
-//       <section id="contents">
-//         <h2>
-//           <em>{selectCategory}</em> 레시피
-//         </h2>
-//         <Video videos={videos} />
-//       </section>
-//     </main>
-//   )
-// }
-
-// export default MainConts
-
 import React, { useEffect, useState } from 'react'
+
 import { fetchAPI } from '../utils/fetchAPI'
-import { Category, Video } from './index'
+import { Category, Videos } from './'
 
 const MainConts = () => {
-  const [selectCategory, setSelectCategory] = useState('Vito ASMR')
+  const [selectCategory, setSelectCategory] = useState('케이크 레시피')
   const [videos, setVideos] = useState(null)
+
   useEffect(() => {
-    fetchAPI(`search?part=snippet&q=Vito ASMR`).then((data) =>
-      console.log(data)
+    // videos -> video로 바꾸면 빈 칸 생기지 않음
+    fetchAPI(`search?part=snippet&q=${selectCategory}&type=video`).then(
+      (data) =>
+        // console.log(data.items)
+        setVideos(data.items)
     )
-  }, [])
+  }, [selectCategory])
+
   return (
     <main id="main">
       <aside id="aside">
         <Category
+          // 변수 개념
           selectCategory={selectCategory}
+          // 함수 개념
           setSelectCategory={setSelectCategory}
         />
       </aside>
       <section id="contents">
         <h2>
-          <em>{selectCategory}</em>유튜버
+          <em>{selectCategory}</em> 케이크 만들기
         </h2>
-        <Video videos={videos} />
+        <Videos videos={videos} />
       </section>
     </main>
   )
